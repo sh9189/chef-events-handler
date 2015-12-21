@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec"
 
-  spec.add_runtime_dependency 'raven-sentry', '~> 0.15.2'
+  spec.add_runtime_dependency 'sentry-raven', '~> 0.15.2'
 end

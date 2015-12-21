@@ -5,7 +5,7 @@ require 'event_reporting_handler/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "event-reporting-handler"
-  spec.version       = EventReportingHandler::VERSION
+  spec.version       = BloombergLP::EventReportingHandler::VERSION
   spec.authors       = ["Shahul Khajamohideen"]
   spec.email         = ["skhajamohid1@bloomberg.net"]
 

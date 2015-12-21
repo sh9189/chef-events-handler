@@ -46,9 +46,9 @@ module BloombergLP
         if exception
           evt = Raven::Event.capture_exception(exception)
         else
-          evt = Raven::Event.new do |evt|
-            evt.message = 'Unknown error during Chef run'
-            evt.level = :error
+          evt = Raven::Event.new do |event|
+            event.message = 'Unknown error during Chef run'
+            event.level = :error
           end
         end
         # Use the node name, not the FQDN

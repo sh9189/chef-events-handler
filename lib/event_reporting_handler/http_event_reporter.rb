@@ -15,8 +15,8 @@ module BloombergLP
           config.ssl_verification = sentry_config['verify_ssl'] || true
           config.dsn = sentry_config['dsn']
           config.logger = ::Chef::Log
-          config.current_environment = node.chef_environment
-          config.environments = [node.chef_environment]
+          config.current_environment = @node.chef_environment
+          config.environments = [@node.chef_environment]
           config.send_modules = Gem::Specification.respond_to?(:map)
         end
         Raven.logger.debug 'Raven ready to report errors'
@@ -29,7 +29,7 @@ module BloombergLP
       end
 
       # Called at the end a successful Chef run.
-      def run_completed(_node)
+      def run_completed(node)
         publish_event(:run_completed)
       end
 
@@ -52,7 +52,7 @@ module BloombergLP
           end
         end
         # Use the node name, not the FQDN
-        evt.server_name = node.name
+        evt.server_name = @node.name
         Raven.send(evt)
         evt.id
       end

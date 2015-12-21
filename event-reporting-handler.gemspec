@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'event_reporting/version'
+require 'event_reporting_handler/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "event-reporting-handler"
-  spec.version       = EventReporting::VERSION
+  spec.version       = EventReportingHandler::VERSION
   spec.authors       = ["Shahul Khajamohideen"]
   spec.email         = ["skhajamohid1@bloomberg.net"]
 

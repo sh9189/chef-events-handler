@@ -29,7 +29,7 @@ module BloombergLP
       end
 
       # Called at the end a successful Chef run.
-      def run_completed(node)
+      def run_completed(_node)
         publish_event(:run_completed)
       end
 
@@ -57,7 +57,7 @@ module BloombergLP
         evt.id
       end
 
-      def publish_event(event, custom_attributes)
+      def publish_event(event, custom_attributes = {})
         json_to_publish = get_json_from_event(event, custom_attributes)
         uri = URI(@http_url)
         res = Net::HTTP.start(uri.host, uri.port) do |http|
@@ -72,8 +72,8 @@ module BloombergLP
       end
 
       def get_json_from_event(event, custom_attributes)
-        event = { deploy_event: { node_fqdn: @node_fqdn, sub_type: event, occurred_at: Time.now.to_s } }
-        event.merge(custom_attributes).to_json
+        deploy_event = { node_fqdn: @node_fqdn, sub_type: event, occurred_at: Time.now.to_s }.merge(custom_attributes)
+        { deploy_event: deploy_event }.to_json
       end
     end
   end

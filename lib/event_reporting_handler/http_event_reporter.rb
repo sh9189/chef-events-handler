@@ -25,7 +25,7 @@ module BloombergLP
 
        def run_started(run_status)
          @chef_run_id = run_status.run_id
-         @node_fqdn = .name
+         @node_fqdn = @node.name
          publish_event(:run_started)
        end
 

@@ -8,8 +8,8 @@ module EventReporting
 
 
 
-     def initialize(config)
-       @http_url = config[:http_url]
+     def initialize(http_url)
+       @http_url = http_url
      end
 
      def run_started(run_status)

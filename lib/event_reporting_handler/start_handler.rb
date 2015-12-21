@@ -4,7 +4,7 @@
 #
 
 require 'chef/handler'
-module EventReporting
+module EventReportingHandler
   class StartHandler < Chef::Handler
     attr_reader :http_url
 

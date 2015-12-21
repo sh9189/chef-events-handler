@@ -3,10 +3,8 @@
 # Copyright 2015, Bloomberg Finance L.P.
 #
 require 'chef/event_dispatch/base'
-module EventReporting
+module EventReportingHandler
   class HttpEventReporter < Chef::EventDispatch::Base
-
-
 
      def initialize(http_url)
        @http_url = http_url

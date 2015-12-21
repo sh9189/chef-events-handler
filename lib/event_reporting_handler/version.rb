@@ -2,6 +2,6 @@
 #
 # Copyright 2015, Bloomberg Finance L.P.
 #
-module EventReporting
-  VERSION = "0.1.0"
+module EventReportingHandler
+  VERSION = "0.1.1"
 end

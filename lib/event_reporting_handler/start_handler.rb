@@ -17,7 +17,6 @@ module BloombergLP
         Chef::Log.debug("Running start handler with http_url: #{@http_url} and sentry_config: #{@sentry_config} ")
         http_event_reporter = HttpEventReporter.new(@http_url, @sentry_config, @run_status)
         @run_status.events.register(http_event_reporter)
-        http_event_reporter.run_started(@run_status)
       end
     end
   end

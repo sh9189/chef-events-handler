@@ -39,7 +39,6 @@ module BloombergLP
       def run_failed(exception)
         sentry_event_id = report_to_sentry(exception)
         publish_event(:run_failed, {sentry_event_id: sentry_event_id})
-
       end
 
       private

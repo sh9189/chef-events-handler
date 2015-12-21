@@ -13,6 +13,7 @@ module EventReportingHandler
     end
 
     def report
+      Chef::Log.debug("Running start handler with http_url: #{http_url}")
       http_event_reporter = HttpEventReporter.new(http_url)
       @run_status.events.register(http_event_reporter)
       http_event_reporter.run_started(@run_status)

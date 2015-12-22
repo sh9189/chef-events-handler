@@ -1,26 +1,29 @@
-# chef-events-handler
+# event-reporting-handler
 
 Chef handler to send chef run events to a http url. Also reports chef run failures to sentry.
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'chef-events-handler'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install chef-events-handler
-
 ## Usage
 
+StartHandler class requires two arguments to construct an object, a http url to send chef run events and a sentry config. The sentry config is a hash that should atleast include sentry dsn to send messages on a chef run failure.
 
+The simplest way to use 'event-reporting-handler' is by adding 'event-reporting-handler' as start handler using [chef client cookbook](https://github.com/chef-cookbooks/chef-client).
+ For example,
+```ruby
+node.default['chef_client']['load_gems']['sentry-raven'] = {
+    :version => '0.9.4'
+}
+node.default['chef_client']['load_gems']['event-reporting-handler'] = {
+    :require_name => 'event_reporting_handler',
+    :version => '0.1.11'
+}
+
+node.default['chef_client']['config']['start_handlers'] = [
+    {
+        :class => "BloombergLP::EventReportingHandler::StartHandler",
+        :arguments => [ some_http_url, {dsn: some_sentry_dsn }]
+    }
+]
+```
 
 ## Contributing
 

@@ -10,9 +10,9 @@ require 'raven'
 module BloombergLP
   module EventReportingHandler
     class HttpEventReporter < Chef::EventDispatch::Base
-      def initialize(http_url, whitelist_attributes, sentry_config, run_status)
-        @http_url = http_url
-        @whitelist_attributes = Chef::Whitelist.filter(node, whitelist_attributes)
+      def initialize(http_config, sentry_config, run_status)
+        @http_url = http_config['url']
+        @whitelist_attributes = Chef::Whitelist.filter(node, http_config['whitelist_attributes'])
         @node = run_status.node
         Raven.configure(true) do |config|
           config.ssl_verification = sentry_config['verify_ssl'] || true

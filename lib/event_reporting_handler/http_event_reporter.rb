@@ -3,13 +3,16 @@
 # Copyright 2015, Bloomberg Finance L.P.
 #
 require 'chef/event_dispatch/base'
+require 'chef/whitelist'
 require 'raven'
+
 
 module BloombergLP
   module EventReportingHandler
     class HttpEventReporter < Chef::EventDispatch::Base
-      def initialize(http_url, sentry_config, run_status)
+      def initialize(http_url, whitelist_attributes, sentry_config, run_status)
         @http_url = http_url
+        @whitelist_attributes = Chef::Whitelist.filter(node, whitelist_attributes)
         @node = run_status.node
         Raven.configure(true) do |config|
           config.ssl_verification = sentry_config['verify_ssl'] || true
@@ -58,7 +61,7 @@ module BloombergLP
       end
 
       def publish_event(event, custom_attributes = {})
-        json_to_publish = get_json_from_event(event, custom_attributes)
+        json_to_publish = get_json_from_event(event, custom_attributes.merge(whitelist_attributes))
         uri = URI(@http_url)
         res = Net::HTTP.start(uri.host, uri.port) do |http|
           http.post(uri.path, json_to_publish, 'Content-Type' => 'application/json')

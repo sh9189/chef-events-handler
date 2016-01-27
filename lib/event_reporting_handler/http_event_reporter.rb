@@ -61,7 +61,7 @@ module BloombergLP
       end
 
       def publish_event(event, custom_attributes = {})
-        json_to_publish = get_json_from_event(event, custom_attributes.merge(whitelist_attributes))
+        json_to_publish = get_json_from_event(event, custom_attributes.merge(@whitelist_attributes))
         uri = URI(@http_url)
         res = Net::HTTP.start(uri.host, uri.port) do |http|
           http.post(uri.path, json_to_publish, 'Content-Type' => 'application/json')

@@ -20,7 +20,7 @@ node.default['chef_client']['load_gems']['event-reporting-handler'] = {
 node.default['chef_client']['config']['start_handlers'] = [
     {
         :class => "BloombergLP::EventReportingHandler::StartHandler",
-        :arguments => [ some_http_url, {dsn: some_sentry_dsn }]
+        :arguments => [ { url: some_http_url, whitelist_attributes: some_attribute_whitelist }, {dsn: some_sentry_dsn }]
     }
 ]
 ```

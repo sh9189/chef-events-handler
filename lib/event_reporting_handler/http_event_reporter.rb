@@ -62,15 +62,19 @@ module BloombergLP
 
       def publish_event(event, custom_attributes = {})
         json_to_publish = get_json_from_event(event, custom_attributes.merge(@whitelist_attributes))
-        uri = URI(@http_url)
-        res = Net::HTTP.start(uri.host, uri.port) do |http|
-          http.post(uri.path, json_to_publish, 'Content-Type' => 'application/json')
-        end
-        case res
-        when Net::HTTPSuccess, Net::HTTPRedirection
-          Chef::Log.debug("Successfully sent http request with #{json_to_publish} to #{@http_url}")
-        else
-          Chef::Log.warn("Error in sending http request to #{@http_url} Code is #{res.code} Msg is #{res.message}")
+        begin
+          uri = URI(@http_url)
+          res = Net::HTTP.start(uri.host, uri.port) do |http|
+            http.post(uri.path, json_to_publish, 'Content-Type' => 'application/json')
+          end
+          case res
+          when Net::HTTPSuccess, Net::HTTPRedirection
+            Chef::Log.debug("Successfully sent http request with #{json_to_publish} to #{@http_url}")
+          else
+            Chef::Log.warn("Error in sending http request to #{@http_url} Code is #{res.code} Msg is #{res.message}")
+          end
+        rescue StandardError => e # catch all exceptions so that chef run does not fail
+          Chef::Log.warn("Exception raised when sending http request to #{@http_url} : #{e}")
         end
       end
 
